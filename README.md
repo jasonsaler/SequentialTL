@@ -2,9 +2,9 @@
 Arduino code for making sequential turn signals in any car with 3 brake/turn signal lights per side.
 
 Firstoff: This should be used with caution. Whenever working with electrical systems be sure to disconnect the battery. 
-Some state lawsmay outlaw custom flashing patterns or tampering with brake and turn indicators. 
+Some state laws may outlaw custom flashing patterns or tampering with brake and turn indicators. 
 Check with local state laws before instalation and only for use at the users own risk. As the user agreement states, any damages, 
-injury, prosecution, etc that arises from use or misuse of this codeis upon the user and any consequences thereof are the 
+injury, prosecution, etc that arises from use or misuse of this code is upon the user and any consequences thereof are the 
 responsibility of the user. I am not responsible for anything that results out of use of this program.
 
 With that said, have fun, be safe and enjoy a cool custom light pattern.
