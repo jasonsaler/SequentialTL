@@ -10,7 +10,7 @@ responsibility of the user. I am not responsible for anything that results out o
 With that said, have fun, be safe and enjoy a cool custom light pattern.
 
 To use this program an arduino board with at least 13 pins is necessary. There are multiple boards that will fill this need.
-The Uno is a great option as it meets the minimum requirements and is very affordable.
+The Uno is a great option as it meets the minimum requirements and is very affordable. Download or just open and copy the code from sequencial_turn_signal_4_8_0zxy.ino  
 
 To upload the program onto the board, the arduino software must be used on a PC and the arduino plugged into the PC USB port.
 Download the arduino software at: https://www.arduino.cc/en/Main/Software and also find out details and instructions how to 
