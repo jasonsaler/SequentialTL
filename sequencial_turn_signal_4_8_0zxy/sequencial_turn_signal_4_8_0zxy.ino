@@ -153,13 +153,13 @@ void loop()
   else
   {
     // 5. This is if the right turn signal is on, do a cycle through the lights.
-    if( ( (digitalRead(LEFT_SIGNAL_INPUT) == 1) and (digitalRead(BRAKE_INPUT) == 1) ) and ( (digitalRead(RIGHT_SIGNAL_INPUT) == 0) || (!isRightTap) ) )
+    if( ( (digitalRead(LEFT_SIGNAL_INPUT) == 1) and (digitalRead(BRAKE_INPUT) == 1) ) and ( (digitalRead(RIGHT_SIGNAL_INPUT) == 0) || (isRightTap) ) )
     {
       (digitalRead(MODE_INPUT) == 0) ? (rightSequence(QUICK_BLINK, QUICK_BLINK)) : (rightBlink(SLOW_BLINK, MEDIUM_BLINK));
     }
     
     // 6. Here is if the left turn signal is on. Cycle through the lights.
-    if( ( (digitalRead(RIGHT_SIGNAL_INPUT) == 1) and (digitalRead(BRAKE_INPUT) == 1) ) and ( (digitalRead(LEFT_SIGNAL_INPUT) == 0) || (!isLeftTap) ) )
+    if( ( (digitalRead(RIGHT_SIGNAL_INPUT) == 1) and (digitalRead(BRAKE_INPUT) == 1) ) and ( (digitalRead(LEFT_SIGNAL_INPUT) == 0) || (isLeftTap) ) )
     {
       (digitalRead(MODE_INPUT) == 0) ? (leftSequence(QUICK_BLINK, QUICK_BLINK)) : (leftBlink(SLOW_BLINK, MEDIUM_BLINK));
     }
@@ -171,6 +171,8 @@ void loop()
 
 void rightSequence(int durationMillis, int pauseDurationMillis)
 {
+  checkIsTap();
+  
   selectLeftOn(OFF, OFF, OFF, OFF);
   selectRightOn(ON, OFF, OFF, OFF);
   delay(durationMillis);
@@ -178,9 +180,7 @@ void rightSequence(int durationMillis, int pauseDurationMillis)
   selectLeftOn(OFF, OFF, OFF, OFF);
   selectRightOn(ON, ON, OFF, ON);
   delay(durationMillis);
-
-  checkIsTap(); 
-  
+ 
   selectLeftOn(OFF, OFF, OFF, OFF);
   selectRightOn(ON, ON, ON, ON);
   delay(durationMillis);
@@ -193,11 +193,11 @@ void rightSequence(int durationMillis, int pauseDurationMillis)
 
 void rightBlink(int durationMillis, int offDurationMillis)
 {
+  checkIsTap();
+  
   selectLeftOn(OFF, OFF, OFF, OFF);
   selectRightOn(OFF, ON, ON, ON);
   delay(durationMillis);
-
-  checkIsTap();
   
   off();
   delay(offDurationMillis);
@@ -207,6 +207,8 @@ void rightBlink(int durationMillis, int offDurationMillis)
 
 void leftSequence(int durationMillis, int pauseDurationMillis)
 {
+  checkIsTap();
+  
   selectLeftOn(ON, OFF, OFF, OFF);
   selectRightOn(OFF, OFF, OFF, OFF);
   delay(durationMillis);
@@ -214,8 +216,6 @@ void leftSequence(int durationMillis, int pauseDurationMillis)
   selectLeftOn(ON, ON, OFF, ON);
   selectRightOn(OFF, OFF, OFF, OFF);
   delay(durationMillis);
-
-  checkIsTap();
   
   selectLeftOn(ON, ON, ON, ON);
   selectRightOn(OFF, OFF, OFF, OFF);
@@ -229,11 +229,11 @@ void leftSequence(int durationMillis, int pauseDurationMillis)
 
 void leftBlink(int onDurationMillis, int offDurationMillis)
 {
+  checkIsTap();
+  
   selectLeftOn(OFF, ON, ON, ON);
   selectRightOn(OFF, OFF, OFF, OFF);
   delay(onDurationMillis);
-
-  checkIsTap();
   
   off();
   delay(offDurationMillis);
@@ -243,6 +243,8 @@ void leftBlink(int onDurationMillis, int offDurationMillis)
 
 void rightSequenceBrake(int durationMillis, int pauseDurationMillis)
 {
+  checkIsTap();
+  
   selectRightOn(ON, OFF, OFF, OFF);
   selectLeftOn(ON, ON, ON, OFF);
   delay(durationMillis);
@@ -250,8 +252,6 @@ void rightSequenceBrake(int durationMillis, int pauseDurationMillis)
   selectRightOn(ON, ON, OFF, ON);
   selectLeftOn(ON, ON, ON, OFF);
   delay(durationMillis);
-
-  checkIsTap();
   
   selectRightOn(ON, ON, ON, ON);
   selectLeftOn(ON, ON, ON, OFF);
@@ -266,11 +266,11 @@ void rightSequenceBrake(int durationMillis, int pauseDurationMillis)
 
 void rightBlinkBrake(int onDurationMillis, int offDurationMillis)
 {
+  checkIsTap();
+  
   selectLeftOn(OFF, ON, ON, OFF);
   selectRightOn(OFF, ON, ON, ON);
   delay(onDurationMillis);
-
-  checkIsTap();
   
   selectLeftOn(OFF, ON, ON, OFF);
   selectRightOn(OFF, OFF, OFF, OFF);
@@ -281,6 +281,8 @@ void rightBlinkBrake(int onDurationMillis, int offDurationMillis)
 
 void leftSequenceBrake(int durationMillis, int pauseDurationMillis)
 {
+  checkIsTap();
+  
   selectLeftOn(ON, OFF, OFF, OFF);
   selectRightOn(ON, ON, ON, OFF);
   delay(durationMillis);
@@ -288,8 +290,6 @@ void leftSequenceBrake(int durationMillis, int pauseDurationMillis)
   selectLeftOn(ON, ON, OFF, ON);
   selectRightOn(ON, ON, ON, OFF);
   delay(durationMillis);
-
-  checkIsTap();
   
   selectLeftOn(ON, ON, ON, ON);
   selectRightOn(ON, ON, ON, OFF);
@@ -304,11 +304,11 @@ void leftSequenceBrake(int durationMillis, int pauseDurationMillis)
 
 void leftBlinkBrake(int onDurationMillis, int offDurationMillis)
 {
+  checkIsTap();
+  
   selectLeftOn(OFF, ON, ON, ON);
   selectRightOn(OFF, ON, ON, OFF);
   delay(onDurationMillis);
-
-  checkIsTap();
 
   selectLeftOn(OFF, OFF, OFF, OFF);
   selectRightOn(OFF, ON, ON, OFF);
@@ -402,27 +402,41 @@ void selectRightOn(boolean rightInnerPower, boolean rightMiddlePower, boolean ri
 // IIIb. Tap Logic Functions
 
 void checkIsTap()
-{ 
-  if(flashCount > 0)
-    return;
-    
-  if( (digitalRead(RIGHT_SIGNAL_INPUT) == 1) )
-    isRightTap = true;
-  else if( (digitalRead(LEFT_SIGNAL_INPUT) == 1) )
-    isLeftTap = true;
+{   
+  if(flashCount > 0)  
+  {    
+    if( (digitalRead(RIGHT_SIGNAL_INPUT) == 0) )    
+    {      
+      isRightTap = false;      
+      resetFlashCount();    
+    }    
+    else if( (digitalRead(LEFT_SIGNAL_INPUT) == 0) )    
+    {      
+      isLeftTap = false;      
+      resetFlashCount();    
+    }  
+  }  
+  else  
+  {      
+    if( (digitalRead(RIGHT_SIGNAL_INPUT) == 0) )      
+      isRightTap = true;    
+    else if( (digitalRead(LEFT_SIGNAL_INPUT) == 0) )      
+      isLeftTap = true;  
+  }
 }
 
 void updateTapControl()
-{
-  flashCount++;
-    
-  if( (flashCount > MAX_REPEAT_ON_TAP) and (isRightTap) )
-  {
-    isRightTap = false;
-  }
-  else if( (flashCount > MAX_REPEAT_ON_TAP) and (isLeftTap) )
-  {
-    isLeftTap = false;
+{  
+  flashCount++;      
+  if( (flashCount > MAX_REPEAT_ON_TAP) and (isRightTap) )  
+  {    
+    isRightTap = false;    
+    resetFlashCount();  
+  }  
+  else if( (flashCount > MAX_REPEAT_ON_TAP) and (isLeftTap) )  
+  {    
+    isLeftTap = false;    
+    resetFlashCount();  
   }
 }
 
