@@ -21,19 +21,19 @@ This was originally made and intended for use on the Pontiac Fiero, but may be u
 
 Notes about setting up the board properly:
 Output pins are 4-11
-4: Left(driver's side) Marker lights
-5: Left outmost taillight
-6: Left Middle Taillight
-7: Left Inmost taillight
-8: Right(passenger side) inmost taillight
-9: Right middle taillight
-10: Right outmost taillight
-11: Right marker lights
+\n4: Left(driver's side) Marker lights
+\n5: Left outmost taillight
+\n6: Left Middle Taillight
+\n7: Left Inmost taillight
+\n8: Right(passenger side) inmost taillight
+\n9: Right middle taillight
+\n10: Right outmost taillight
+\n11: Right marker lights
 
 Input Pins are 1-3
-1: Input from the right turn indicator switch
-2: Input from the left turn indicator switch
-3: Input from the brake light power, utilizes interrupt functionality
+\n1: Input from the right turn indicator switch
+\n2: Input from the left turn indicator switch
+\n3: Input from the brake light power, utilizes interrupt functionality
 [Depricated] 12: Optional switch for going between sequential pattern to a standard blink pattern. 
     (If switch not desired then hook pin 12 to Arduino 5V output) 
 > As of Version 4.8.7 mode change is made through a quick tap on the emergency flasher button/switch. No separate swithces are needed.
