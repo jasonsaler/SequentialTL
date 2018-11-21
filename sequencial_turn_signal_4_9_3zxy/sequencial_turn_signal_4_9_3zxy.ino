@@ -5,7 +5,7 @@
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 +                                                       + 
 +  Program: Sequential Turn Signal Master               +
-+  Version: 4.8.4zxy                                    +
++  Version: 4.9.3zxy                                    +
 +  Purpose: Using a 3 taillight per side configuration  +
 +           this program will make them flash           +
 +           sequentially for turn signal and brake.     +
